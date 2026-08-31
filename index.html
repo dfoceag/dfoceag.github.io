@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Daniel-Nicu Foceag — IT Operations Engineer. Windows and macOS estates, identity and compliance, and automation that takes manual steps out of IT.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%3E%3Crect%20width='32'%20height='32'%20rx='6'%20fill='%230d0d0d'/%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Daniel-Nicu Foceag — IT Operations Engineer">
+<meta property="og:description" content="Windows and macOS estates, identity and compliance, and automation that takes manual steps out of IT.">
+<title>Daniel-Nicu Foceag</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&display=swap');
+
+  :root{
+    --bg:#0d0d0d;
+    --text:#f4f4f4;
+    --dim:#8c8c8c;
+    --soft:#cfcfcf;
+    --rule:rgba(255,255,255,.13);
+    --chip:rgba(255,255,255,.07);
+    --font:"Hanken Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth;overflow-x:hidden}
+  body{font-family:var(--font);background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;line-height:1.6;overflow-x:hidden;max-width:100%}
+  .wrap{max-width:820px;margin:0 auto;padding:0 28px}
+  a{color:inherit}
+  :focus-visible{outline:2px solid #fff;outline-offset:3px}
+
+  /* ---------- hero ---------- */
+  .hero{
+    background:linear-gradient(180deg,#ffffff 0,#c6c6c6 42px,#4a4a4a 104px,#0d0d0d 190px,#0d0d0d 100%);
+    min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;
+    text-align:center;padding:120px 28px 9vh;
+  }
+  .hero .kicker,.hero h1,.hero .lede,.hero .meta{
+    text-shadow:0 1px 26px rgba(0,0,0,.5),0 0 3px rgba(0,0,0,.35);
+  }
+  .hero .kicker{
+    font-size:clamp(15px,1.7vw,21px);letter-spacing:.02em;opacity:.9;margin-bottom:.6em;
+    display:flex;flex-wrap:wrap;justify-content:center;align-items:baseline;gap:.2em .6em;
+  }
+  .hero .kicker .role{font-weight:600;font-size:1.12em}
+  .hero .kicker .sep{opacity:.4}
+  .hero .kicker .detail{font-weight:400;opacity:.72}
+  .hero h1{font-size:clamp(40px,7.8vw,108px);font-weight:700;letter-spacing:-.03em;line-height:.96;margin-bottom:.34em;text-wrap:balance}
+  .hero .lede{font-size:clamp(17px,2.1vw,26px);font-weight:400;line-height:1.42;max-width:19em;opacity:.94;text-wrap:balance}
+  .hero .meta{margin-top:2.8em;font-size:14px;letter-spacing:.16em;text-transform:uppercase;opacity:.7}
+  .hero .meta a{text-decoration:none;border-bottom:1px solid rgba(255,255,255,.35);padding-bottom:2px}
+  .hero .meta a:hover{border-bottom-color:#fff}
+  .hero .meta span{margin:0 .55em;opacity:.5}
+  .scrollcue{margin-top:5em;animation:bob 1.8s ease-in-out infinite}
+  .scrollcue svg{display:block;width:30px;height:20px}
+  .scrollcue path{stroke:#fff;stroke-width:2.4;fill:none;stroke-linecap:round;stroke-linejoin:round;opacity:.7}
+  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(9px)}}
+
+  /* ---------- skills marquee ---------- */
+  .marquee{
+    width:100vw;margin-left:calc(50% - 50vw);   /* flush full-bleed, padding-independent */
+    margin-top:2.9em;overflow:hidden;cursor:grab;touch-action:pan-y;
+    -webkit-mask-image:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent);
+    mask-image:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent);   /* fade both edges */
+  }
+  .marquee.dragging{cursor:grabbing}
+  .track{display:flex;width:max-content;will-change:transform;user-select:none;-webkit-user-select:none}
+  .skill{
+    background:#fff;color:#141414;border-radius:9px;
+    padding:11px 20px;font-size:15px;font-weight:600;white-space:nowrap;
+    box-shadow:0 2px 14px rgba(0,0,0,.28);
+    margin-right:14px;
+  }
+  /* JS fills the track with exactly enough copies for the screen and animates it by one
+     set-width (pixels) so the loop is seamless at any width. */
+
+  /* ---------- projects list ---------- */
+  .lede-head{padding:120px 0 8px}
+  .lede-head h2{font-size:clamp(15px,1.6vw,18px);font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--dim)}
+  .projects{border-top:1px solid var(--rule)}
+  .proj{display:block;text-decoration:none;color:inherit;padding:44px 0;border-bottom:1px solid var(--rule);cursor:pointer}
+  .proj .prow{display:flex;align-items:baseline;justify-content:space-between;gap:20px}
+  .proj h3{font-size:clamp(26px,4.4vw,44px);font-weight:600;letter-spacing:-.02em;line-height:1.05;transition:opacity .25s ease;text-wrap:balance}
+  .proj .arrow{font-size:clamp(22px,3vw,32px);color:var(--dim);transition:transform .3s ease,color .25s ease;flex:none}
+  .proj p{margin-top:16px;font-size:clamp(15px,1.5vw,18px);color:var(--soft);max-width:44em;line-height:1.55}
+  .proj .tags{margin-top:20px;display:flex;flex-wrap:wrap;gap:8px}
+  .tag{background:var(--chip);border:1px solid var(--rule);border-radius:999px;padding:4px 13px;font-size:13px;letter-spacing:.03em;color:#cfcfcf}
+  .proj:hover h3{opacity:.62}
+  .proj:hover .arrow{transform:translateX(6px);color:var(--text)}
+
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease}
+  .reveal.in{opacity:1;transform:none}
+
+  /* ---------- about ---------- */
+  .about{padding:120px 0 40px;border-bottom:1px solid var(--rule)}
+  .about h2{font-size:clamp(15px,1.6vw,18px);font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--dim);margin-bottom:1.4em}
+  .about p{font-size:clamp(16px,1.7vw,20px);max-width:38em;margin-bottom:1.1em;color:#dcdcdc}
+  .about a{color:#fff}
+  footer{padding:40px 0 70px;color:var(--dim);font-size:13px;letter-spacing:.14em;text-transform:uppercase}
+
+  /* ---------- project detail ---------- */
+  .topbar{padding:26px 0;border-bottom:1px solid var(--rule)}
+  .topbar a{color:var(--dim);text-decoration:none;font-size:14px;letter-spacing:.04em;cursor:pointer}
+  .topbar a:hover{color:var(--text)}
+  .phead{padding:80px 0 60px;border-bottom:1px solid var(--rule)}
+  .phead .tag-line{font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);margin-bottom:1.1em}
+  .phead h1{font-size:clamp(30px,5.4vw,54px);font-weight:700;letter-spacing:-.025em;line-height:1.04;text-wrap:balance}
+  .phead .sub{margin-top:.8em;font-size:clamp(16px,1.9vw,20px);color:var(--soft);max-width:34em;line-height:1.5}
+  .pbody{padding:56px 0 40px}
+  .pbody h2{font-size:15px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);margin:2.6em 0 .8em}
+  .pbody h2:first-child{margin-top:0}
+  .pbody p{margin:0 0 1.15em;font-size:17px;color:#dcdcdc;max-width:44em}
+  .pbody ul{margin:0 0 1.2em 1.2em;max-width:44em}
+  .pbody li{margin-bottom:.5em;font-size:17px;color:#dcdcdc}
+  .pbody strong{color:var(--text);font-weight:600}
+  .pbody code{background:rgba(255,255,255,.08);border-radius:4px;padding:1px 6px;font-size:.9em}
+  .repo{display:inline-block;margin-top:.6em;border:1px solid var(--rule);color:#fff;text-decoration:none;padding:12px 22px;border-radius:8px;font-size:14px;letter-spacing:.03em;transition:background .2s ease,border-color .2s ease}
+  .repo:hover{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.4)}
+  .note{background:rgba(255,255,255,.04);border-left:2px solid rgba(255,255,255,.35);padding:16px 20px;margin:0 0 1.4em;font-size:16px;color:var(--soft);max-width:44em}
+  .pfoot{border-top:1px solid var(--rule);margin-top:44px;padding:34px 0;color:var(--dim);font-size:13px;letter-spacing:.12em;text-transform:uppercase}
+
+  /* avoid single-word last lines (widows) in running text */
+  .proj p,.about p,.phead .sub,.pbody p,.pbody li,.note{text-wrap:pretty}
+
+  @media (prefers-reduced-motion:reduce){
+    .reveal{opacity:1;transform:none;transition:none}
+    .scrollcue{animation:none}
+    html{scroll-behavior:auto}
+    .marquee{width:100%;margin-left:0;-webkit-mask-image:none;mask-image:none}
+    .track{flex-wrap:wrap;justify-content:center;width:auto;max-width:640px;margin:0 auto}
+    .track .dup{display:none}
+  }
+</style>
+</head>
+<body>
+
+
+<!-- ======================= HOME ======================= -->
+<section class="screen" id="home">
+  <header class="hero">
+    <p class="kicker">
+      <span class="role">IT Operations Engineer</span>
+      <span class="sep">·</span>
+      <span class="detail">5 years' experience</span>
+      <span class="sep">·</span>
+      <span class="detail">Surrey / London</span>
+    </p>
+    <h1>Daniel-Nicu Foceag</h1>
+    <p class="lede">I look after Windows and macOS estates, identity and compliance.
+      Most of what I build takes manual steps out of IT processes.</p>
+    <p class="meta">
+      <a href="https://github.com/dfoceag">GitHub</a><span>/</span>
+      <a href="https://www.linkedin.com/in/daniel-nicu-foceag-0b47aa250/">LinkedIn</a><span>/</span>
+      <a href="mailto:foceagdanielnicu@gmail.com">Email</a>
+    </p>
+    <div class="marquee">
+      <div class="track" id="mtrack">
+        <span class="skill">Intune</span>
+        <span class="skill">JAMF Pro</span>
+        <span class="skill">Entra ID</span>
+        <span class="skill">Microsoft 365</span>
+        <span class="skill">Google Workspace</span>
+        <span class="skill">PowerShell</span>
+        <span class="skill">Active Directory</span>
+        <span class="skill">ISO 27001</span>
+        <span class="skill">PCI DSS</span>
+        <span class="skill">Automation</span>
+      </div>
+    </div>
+    <div class="scrollcue" aria-hidden="true"><svg viewBox="0 0 30 20"><path d="M3 4 L15 16 L27 4"/></svg></div>
+  </header>
+
+  <div class="wrap">
+    <section class="lede-head"><h2>Selected projects</h2></section>
+    <section class="projects">
+
+      <a class="proj reveal" href="#onboarding">
+        <div class="prow"><h3>Onboarding without the APIs</h3><span class="arrow">→</span></div>
+        <p>New starters needed accounts in Slack, Atlassian, Keeper and Dialpad. None of
+          the provisioning APIs were available on the plans we had, so each connector
+          uses the best method its tier allowed.</p>
+        <div class="tags"><span class="tag">Node</span><span class="tag">React</span><span class="tag">Microsoft Graph</span><span class="tag">Puppeteer</span></div>
+      </a>
+
+      <a class="proj reveal" href="#m365">
+        <div class="prow"><h3>A web UI for Exchange admin</h3><span class="arrow">→</span></div>
+        <p>Exchange Online administration is a lot of half-remembered PowerShell. I
+          wrapped the tasks I ran most often in a local web UI, so they could be run
+          without rebuilding the cmdlet from memory each time.</p>
+        <div class="tags"><span class="tag">PowerShell</span><span class="tag">Exchange Online</span><span class="tag">Local web UI</span></div>
+      </a>
+
+      <a class="proj reveal" href="#zippy">
+        <div class="prow"><h3>Zippy</h3><span class="arrow">→</span></div>
+        <p>A single-machine network recon and testing toolkit for Linux. It puts nmap,
+          tshark, John the Ripper and BlueZ behind one BIOS-styled desktop GUI, with a
+          few things built from scratch where nothing quite fit. A personal project,
+          built in my own time.</p>
+        <div class="tags"><span class="tag">Python</span><span class="tag">GTK / WebKit</span><span class="tag">Linux</span><span class="tag">BlueZ</span></div>
+      </a>
+
+    </section>
+
+    <section class="about">
+      <h2>About</h2>
+      <p>I am a Senior IT Operations Engineer, currently supporting over 750 users across
+        a company's global offices. Before that I spent three years at a SaaS company,
+        where I covered a 110-user business on my own for the first year and was promoted
+        to Senior Service Desk Engineer.</p>
+      <p>Most of my work is endpoint management, identity and compliance — ISO 27001,
+        PCI DSS and Cyber Essentials. The part I enjoy most is automation.</p>
+      <p><a href="mailto:foceagdanielnicu@gmail.com">foceagdanielnicu@gmail.com</a></p>
+    </section>
+    <footer>Daniel-Nicu Foceag</footer>
+  </div>
+</section>
+
+<!-- ======================= ONBOARDING ======================= -->
+<section class="screen" id="onboarding" hidden>
+  <div class="wrap">
+    <div class="topbar"><a href="#home">← Back</a></div>
+  </div>
+  <header class="phead"><div class="wrap">
+    <p class="tag-line">Node · React · Microsoft Graph</p>
+    <h1>Onboarding without the APIs</h1>
+    <p class="sub">A one-click tool to set up new starters across four services, built on plans that had none of the provisioning APIs.</p>
+  </div></header>
+  <div class="pbody"><div class="wrap">
+    <h2>The problem</h2>
+    <p>Setting up a new starter meant creating accounts in Slack, Atlassian, Keeper and Dialpad by hand, one service at a time. It was slow, easy to get half-done, and exactly the kind of repetitive work worth removing.</p>
+    <p>The catch was the plans. The clean way to do this is each service's provisioning API, but those sit behind tiers the company wasn't on — Slack's <code>admin.users:write</code> needs Enterprise Grid, Keeper's SCIM needs Enterprise. So the interesting part wasn't wiring up four APIs. It was working out what to do when most of them were out of reach.</p>
+    <h2>How it works</h2>
+    <p>An Express backend with one connector module per service, and a React front end that reads the list of available services from the backend rather than hard-coding them. Each connector uses the best method its plan actually allowed:</p>
+    <ul>
+      <li><strong>Slack</strong> — no admin scope, so it emails the person a workspace invite link through Microsoft Graph.</li>
+      <li><strong>Keeper</strong> — no SCIM, so it drives the Keeper admin console with Puppeteer over Edge's remote debugging port.</li>
+      <li><strong>Atlassian</strong> — the Jira Cloud REST API works on every plan, so this one is a direct call.</li>
+      <li><strong>Dialpad</strong> — a direct REST call on the Business plan.</li>
+    </ul>
+    <h2>What I'd change</h2>
+    <p>The Keeper connector is the honest weak point. Driving a web console with a headless browser works, but it's fragile: it breaks the day Keeper changes their admin UI, and it depends on a login session staying alive. It was the right call given the plan, not the right call in the abstract. The day someone paid for SCIM, I'd throw it away and not miss it.</p>
+    <p>The design that made me happiest is the connector interface. Adding a service is a new file exporting <code>isConfigured()</code> and <code>invite()</code>, and the front end picks it up on its own. That part I would keep.</p>
+    <a class="repo" href="https://github.com/dfoceag/onboarding-app">View on GitHub →</a>
+    <div class="pfoot">Daniel-Nicu Foceag · <a href="#home" style="color:inherit">Home</a></div>
+  </div></div>
+</section>
+
+<!-- ======================= M365 ======================= -->
+<section class="screen" id="m365" hidden>
+  <div class="wrap">
+    <div class="topbar"><a href="#home">← Back</a></div>
+  </div>
+  <header class="phead"><div class="wrap">
+    <p class="tag-line">PowerShell · Exchange Online</p>
+    <h1>A web UI for Exchange admin</h1>
+    <p class="sub">The Exchange Online tasks I ran most often, wrapped in a local web interface so they didn't have to be rebuilt from memory each time.</p>
+  </div></header>
+  <div class="pbody"><div class="wrap">
+    <h2>The problem</h2>
+    <p>A lot of Exchange Online administration is half-remembered PowerShell. Checking which domains are configured, testing whether external-sender tagging is working, fixing a mailbox timezone, auditing settings across accounts — each is a cmdlet or two, but the kind you look up every time because you don't run them often enough to memorise.</p>
+    <p>I wanted the common ones in one place, runnable without opening a shell and reconstructing the syntax.</p>
+    <h2>How it works</h2>
+    <p>A set of PowerShell tools behind a local web UI, launched from one script. Each tool is a tab: search, domain and external-domain checks, external-tag testing, timezone fixes, an audit-settings view, and a couple of destructive ones (mailbox and calendar-entry removal) kept clearly separate because they don't undo.</p>
+    <p>The web front end matters more than it sounds. A form with named fields is harder to get wrong at 4pm than a raw cmdlet, and it means someone who isn't fluent in Exchange PowerShell can still run the safe operations.</p>
+    <h2>What I'd change</h2>
+    <p>The destructive tools need a confirmation step that makes you type the target back, not just click. They work, but "click to delete calendar entries" is one bad afternoon away from a mistake, and a UI that makes the dangerous action as easy as the safe one is a UI with the wrong emphasis.</p>
+    <a class="repo" href="https://github.com/dfoceag/m365-admin-toolkit">View on GitHub →</a>
+    <div class="pfoot">Daniel-Nicu Foceag · <a href="#home" style="color:inherit">Home</a></div>
+  </div></div>
+</section>
+
+<!-- ======================= ZIPPY ======================= -->
+<section class="screen" id="zippy" hidden>
+  <div class="wrap">
+    <div class="topbar"><a href="#home">← Back</a></div>
+  </div>
+  <header class="phead"><div class="wrap">
+    <p class="tag-line">Python · GTK / WebKit · Linux</p>
+    <h1>Zippy</h1>
+    <p class="sub">A single-machine network recon and testing toolkit for Linux, wrapping the standard CLI tools behind one BIOS-styled desktop GUI. A personal project, built in my own time.</p>
+  </div></header>
+  <div class="pbody"><div class="wrap">
+    <p class="note">Built for use only against devices and networks I own or have explicit permission to test. Several features actively change routing, ARP or DNS behaviour, or emulate other hardware, and are meant to be treated with the same care as any pentesting tool.</p>
+    <h2>What it is</h2>
+    <p>I kept reaching for the same handful of tools — nmap, tshark, John the Ripper, BlueZ, traceroute — and running each from its own terminal with its own flags. Zippy puts them behind one interface: a black-and-red, BIOS-styled desktop GUI, with each tool as a tab. The UI is plain HTML, CSS and JavaScript rendered through pywebview on GTK and WebKit, so it's a real desktop app rather than a browser tab or an Electron bundle.</p>
+    <p>Most tabs wrap an existing tool. A few are built from scratch where nothing quite fit: ARP and NDP spoofing to route a target's traffic through the machine, DNS-spoof-based redirection, Bluetooth HID emulation, and rogue-DHCP probing.</p>
+    <h2>Some of what it does</h2>
+    <ul>
+      <li><strong>Nmap scan</strong> — service and version detection, OS fingerprinting, NSE scripts, whole-subnet scans.</li>
+      <li><strong>Device Monitor / Kill</strong> — ARP/NDP spoofing to observe a target, cut it off, or redirect every domain except a chosen one to a local server.</li>
+      <li><strong>Website Activity</strong> — which hostnames a device is actually reaching, from its DNS queries and TLS SNI.</li>
+      <li><strong>Rogue DHCP detection</strong> — broadcasts a discover and flags more than one distinct server answering.</li>
+      <li><strong>Password audit</strong> — real John the Ripper against pasted hashes with a wordlist.</li>
+      <li><strong>HID remote control</strong> — registers the machine as a Bluetooth HID keyboard so a paired device can be sent single, explicit key presses.</li>
+    </ul>
+    <h2>Privileges</h2>
+    <p>The privileged features rely on things that only exist on Linux — AF_PACKET raw sockets, <code>ip_forward</code>, D-Bus and BlueZ. Rather than run the whole app as root, each privileged action prompts individually through polkit's <code>pkexec</code>. The app itself never runs as root. <code>run.sh</code> detects and installs missing dependencies across dnf, apt, pacman and zypper, so it comes up on most desktop distros without hand-holding.</p>
+    <h2>The part I'd flag</h2>
+    <p>The Bluetooth HID tab is the newest and least-proven, and I've written it up that way rather than hidden it. BlueZ's peripheral-role HID registration over D-Bus is a sparsely documented, version-sensitive corner, so behaviour varies by distro. It's confirmed working against a Steam Deck — I caught a successful pairing and key-press round trip in a btmon capture — and general phone pairing, but not yet against Windows, Android-as-host, TVs or consoles.</p>
+    <p>Two real bugs turned up through hardware testing rather than code review: a "UUID already registered" conflict, fixed by consolidating to a single profile registration with a combined SDP record; and a "PSM not supported" refusal, fixed by binding raw L2CAP sockets directly instead of relying on BlueZ's <code>Profile1.NewConnection</code>. More hardware will probably surface more.</p>
+    <p>Some limits are deliberate rather than unfinished: single key presses only, no text-typing or macros, no mouse. That was a scope decision — I wanted a live interactive remote, not anything that looks like payload injection.</p>
+    <p>The repository is private, and given what several of the tabs do I intend to keep it that way. Happy to walk through the code in an interview.</p>
+    <div class="pfoot">Daniel-Nicu Foceag · <a href="#home" style="color:inherit">Home</a></div>
+  </div></div>
+</section>
+
+<script>
+  // Skills marquee: measure the screen and add exactly enough copies to fill it,
+  // then animate by one set-width in pixels so the loop is seamless at any width.
+  (function(){
+    var track = document.getElementById('mtrack');
+    var marquee = document.querySelector('.marquee');
+    if(!track || !marquee) return;
+    var base = Array.prototype.slice.call(track.children);
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+
+    function build(){
+      if(track._anim){ track._anim.cancel(); track._anim = null; }
+      while(track.children.length > base.length){ track.removeChild(track.lastChild); }
+      if(reduce) return;                       // CSS wraps the single set instead
+      var unit = track.scrollWidth;            // width of one set, incl. trailing margin
+      if(unit <= 0) return;
+      var copies = Math.ceil((window.innerWidth * 2) / unit) + 1;
+      for(var c=1; c<copies; c++){
+        base.forEach(function(node){
+          var cl = node.cloneNode(true);
+          cl.classList.add('dup');
+          cl.setAttribute('aria-hidden','true');
+          track.appendChild(cl);
+        });
+      }
+      if(!track.animate) return;               // very old browsers: static strip
+      var speed = 42;                          // pixels per second
+      var dur = unit / speed * 1000;
+      track._unit = unit;
+      track._dur = dur;
+      track._anim = track.animate(
+        [{transform:'translateX(0)'},{transform:'translateX(-' + unit + 'px)'}],
+        {duration: dur, iterations: Infinity, easing:'linear'}
+      );
+    }
+
+    // grab-and-scrub: dragging scrubs the animation's own timeline, so it stays
+    // seamless and resumes from wherever you let go.
+    var dragging = false, startX = 0, startTime = 0, moved = false;
+    marquee.addEventListener('pointerdown', function(e){
+      if(!track._anim) return;
+      dragging = true; moved = false;
+      startX = e.clientX;
+      startTime = track._anim.currentTime || 0;
+      track._anim.pause();
+      marquee.classList.add('dragging');
+      if(e.pointerId != null){ try{ marquee.setPointerCapture(e.pointerId); }catch(_){} }
+    });
+    marquee.addEventListener('pointermove', function(e){
+      if(!dragging || !track._anim) return;
+      var dx = e.clientX - startX;
+      if(Math.abs(dx) > 2) moved = true;
+      var D = track._dur, msPerPx = D / track._unit;
+      var t = (startTime - dx * msPerPx) % D;   // drag right -> belt moves right
+      if(t < 0) t += D;
+      track._anim.currentTime = t;
+    });
+    function endDrag(e){
+      if(!dragging) return;
+      dragging = false;
+      marquee.classList.remove('dragging');
+      if(track._anim) track._anim.play();
+      if(e && e.pointerId != null){ try{ marquee.releasePointerCapture(e.pointerId); }catch(_){} }
+    }
+    marquee.addEventListener('pointerup', endDrag);
+    marquee.addEventListener('pointercancel', endDrag);
+
+    build();
+    if(document.fonts && document.fonts.ready){ document.fonts.ready.then(build); }
+    var t; window.addEventListener('resize', function(){ clearTimeout(t); t = setTimeout(build, 200); });
+  })();
+
+  var screens = ['home','onboarding','m365','zippy'];
+  function show(id){
+    if(screens.indexOf(id) === -1) id = 'home';
+    screens.forEach(function(s){
+      document.getElementById(s).hidden = (s !== id);
+    });
+    window.scrollTo(0,0);
+  }
+  window.addEventListener('hashchange', function(){
+    show((location.hash || '#home').slice(1));
+  });
+  show((location.hash || '#home').slice(1));
+
+  // reveal-on-scroll for the project rows
+  (function(){
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+    var els = document.querySelectorAll('.reveal');
+    if(reduce || !('IntersectionObserver' in window)){
+      els.forEach(function(e){e.classList.add('in')});
+      return;
+    }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); } });
+    },{threshold:.15});
+    els.forEach(function(e){ io.observe(e); });
+  })();
+</script>
+
+</body>
+</html>
